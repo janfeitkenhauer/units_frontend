@@ -20,10 +20,10 @@ const DataConverter = ({ setTableData, columns }) => {
                     const entry = data[key];
                     const row = {};
                   
-                    // Populate the IRI column with the current key
-                    row['IRI'] = key;
+                    // Populate the URI column with the current key
+                    row['URI'] = key;
 
-                    columns.slice(1).forEach(column => { // Start from index 1 to skip IRI
+                    columns.slice(1).forEach(column => { // Start from index 1 to skip URI
                         // Set the value, if it exists, otherwise set it to null or an appropriate default value
                         row[column] = entry[column] !== undefined ? entry[column] : null;
                     });

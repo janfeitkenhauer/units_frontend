@@ -7,7 +7,7 @@ const DataTable = () => {
     const [tableData, setTableData] = useState([]);
     const [iconStates, setIconStates] = useState({}); // State to track the icon display state for each button
 
-    const columns = ['IRI', 'prefLabel', 'notation', 'conversionMultiplier'];
+    const columns = ['URI', 'prefLabel', 'notation', 'conversionMultiplier'];
 
     const handleClick = (rowIndex, buttonType, text, event) => {
         event.stopPropagation();
@@ -34,7 +34,7 @@ const DataTable = () => {
         // Initialize iconStates for all data rows to true (show the first icon)
         const initialIconStates = {};
         tableData.forEach((_, index) => {
-            initialIconStates[`${index}_iri`] = true; // State for IRI button
+            initialIconStates[`${index}_uri`] = true; // State for URI button
             initialIconStates[`${index}_conversion`] = true; // State for conversionMultiplier button
         });
         setIconStates(initialIconStates);
@@ -50,16 +50,16 @@ const DataTable = () => {
     };
 
     return (
-        <div className="container mx-auto">
+        <div>
             <DataConverter setTableData={setTableData} columns={columns}/>
-            <div className="overflow-x-auto">
+            <div className="w-full overflow-x-auto border border-gray-200 rounded">
                 <table className="min-w-full bg-white shadow-md rounded border-collapse">
                     <thead>
                         <tr>
                             {columns.map((column) => (
                                 <th 
                                     key={column}
-                                    className="px-4 py-2 border-b-2 border-gray-200 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
+                                    className="px-4 py-2 border-b border-gray-200 bg-gray-100 text-left text-sm font-medium text-gray-600 uppercase tracking-wider"
                                 >
                                     {column}
                                 </th>
@@ -79,15 +79,15 @@ const DataTable = () => {
                                             key={column}
                                             className="px-4 py-2 border-b text-sm text-gray-700"
                                         >
-                                            {column === "IRI" ? (
+                                            {column === "URI" ? (
                                                 <div className="flex justify-between items-center">
                                                     {row[column]}
                                                     <button 
-                                                        onClick={(event) => handleClick(index, 'iri', row[column], event)}
+                                                        onClick={(event) => handleClick(index, 'uri', row[column], event)}
                                                         className="ml-1 hover:bg-black/20 p-1 rounded-md"
                                                         title="Copy"
                                                     >
-                                                        {iconStates[`${index}_iri`] ? (
+                                                        {iconStates[`${index}_uri`] ? (
                                                             <svg
                                                                 fill="none"
                                                                 height="24"
