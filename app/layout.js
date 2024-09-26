@@ -8,7 +8,7 @@ export default function RootLayout({ children }) {
       <body>
         <Header />
         {children}
-        <Footer />
+        {/* <Footer /> */}
       </body>
     </html>
   )
@@ -16,10 +16,8 @@ export default function RootLayout({ children }) {
 
 function Header() {
   return (
-    <header className='sticky top-0 w-full h-16 flex flex-col px-6 backdrop-blur-md shadow-sm'>
-      <nav className='w-full flex flex-1 items-center justify-center gap-24'>
-          <a href="/">Home</a>
-      </nav>
+    <header className='sticky top-0 w-full h-16 flex flex-col px-6 backdrop-blur-md shadow-sm flex items-center justify-center'>
+      <h1 className='text-xl font-semibold'>Semantic Unit Library</h1>
       {/* <Search /> */}
     </header>
   );

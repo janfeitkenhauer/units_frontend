@@ -1,7 +1,7 @@
 import DataTable from "@/components/datatable";
 import Link from "next/link";
 
-export default function Mass() {
+export default function Velocity() {
     return (
       <div className="m-4">
         <div className="flex justify-start">
@@ -25,7 +25,7 @@ export default function Mass() {
                     </div>
                 </Link>
             </div>
-        <h1 className="text-2xl font-bold my-4">Mass</h1>
+        <h1 className="text-2xl font-bold my-4">Velocity</h1>
         <DataTable />
       </div>
     );
