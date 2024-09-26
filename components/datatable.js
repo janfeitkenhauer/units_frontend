@@ -5,14 +5,13 @@ import React, { useState, useEffect } from 'react';
 
 const DataTable = () => {
     const [tableData, setTableData] = useState([]);
-    const [iconStates, setIconStates] = useState({}); // State to track the icon display state for each row
+    const [iconStates, setIconStates] = useState({});
 
     const columns = ['IRI', 'prefLabel', 'notation', 'conversionMultiplier'];
 
     const handleClick = (index, text, event) => {
-        event.stopPropagation(); // Prevents the click from propagating to the row
-
-        // Copy the IRI value to the clipboard
+        event.stopPropagation();
+        
         navigator.clipboard.writeText(text).then(() => {
             setIconStates((prev) => ({
                 ...prev,
@@ -31,7 +30,6 @@ const DataTable = () => {
     };
 
     useEffect(() => {
-        // Initialize iconStates for all data rows to true (show the first icon)
         const initialIconStates = tableData.reduce((acc, _, index) => {
             acc[index] = true;
             return acc;
@@ -40,7 +38,6 @@ const DataTable = () => {
     }, [tableData]);
 
     const recalculateFactor = (clickedRowMultiplier) => {
-        // Convert clicked row's conversionMultiplier to 1e+0 and recalculate others
         const recalculatedData = tableData.map(row => ({
             ...row,
             conversionMultiplier: (row.conversionMultiplier * 1e+0) / clickedRowMultiplier
@@ -80,53 +77,94 @@ const DataTable = () => {
                                             className="px-4 py-2 border-b text-sm text-gray-700"
                                         >
                                             {column === "IRI" ? (
-                                            <>
-                                                {row[column]}
-                                                <button 
-                                                onClick={(event) => handleClick(index, row[column], event)}
-                                                className="ml-1"
-                                                >
-                                                    {iconStates[index] ? (
-                                                        <svg
-                                                            fill="none"
-                                                            height="24"
-                                                            shapeRendering="geometricPrecision"
-                                                            stroke="currentColor"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="1.5"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            aria-hidden="true"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path d="M6 17C4.89543 17 4 16.1046 4 15V5C4 3.89543 4.89543 3 6 3H13C13.7403 3 14.3866 3.4022 14.7324 4M11 21H18C19.1046 21 20 20.1046 20 19V9C20 7.89543 19.1046 7 18 7H11C9.89543 7 9 7.89543 9 9V19C9 20.1046 9.89543 21 11 21Z"></path>
-                                                        </svg>
-                                                    ) : (
-                                                        <svg
-                                                            fill="none"
-                                                            height="24"
-                                                            shapeRendering="geometricPrecision"
-                                                            stroke="currentColor"
-                                                            strokeLinecap="round"
-                                                            strokeLinejoin="round"
-                                                            strokeWidth="1.5"
-                                                            viewBox="0 0 24 24"
-                                                            width="24"
-                                                            aria-hidden="true"
-                                                            className="w-5 h-5"
-                                                        >
-                                                            <path d="M20 6L9 17l-5-5"></path>
-                                                        </svg>
-                                                    )}
-                                                </button>
-                                            </>
-                                        ) : 
-                                            column === "conversionMultiplier"
-                                                ? Number(row[column]).toExponential()
-                                                : Array.isArray(row[column])
-                                                    ? row[column].join(', ')
-                                                    : row[column]}
+                                                <div className="flex justify-between items-center">
+                                                    {row[column]}
+                                                    <button 
+                                                        onClick={(event) => handleClick(index, row[column], event)}
+                                                        className="ml-1 hover:bg-black/20 p-1 rounded-md"
+                                                        title="Copy"
+                                                    >
+                                                        {iconStates[index] ? (
+                                                            <svg
+                                                                fill="none"
+                                                                height="24"
+                                                                shapeRendering="geometricPrecision"
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="1.5"
+                                                                viewBox="0 0 24 24"
+                                                                width="24"
+                                                                aria-hidden="true"
+                                                                className="w-5 h-5"
+                                                            >
+                                                                <path d="M6 17C4.89543 17 4 16.1046 4 15V5C4 3.89543 4.89543 3 6 3H13C13.7403 3 14.3866 3.4022 14.7324 4M11 21H18C19.1046 21 20 20.1046 20 19V9C20 7.89543 19.1046 7 18 7H11C9.89543 7 9 7.89543 9 9V19C9 20.1046 9.89543 21 11 21Z"></path>
+                                                            </svg>
+                                                        ) : (
+                                                            <svg
+                                                                fill="none"
+                                                                height="24"
+                                                                shapeRendering="geometricPrecision"
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="1.5"
+                                                                viewBox="0 0 24 24"
+                                                                width="24"
+                                                                aria-hidden="true"
+                                                                className="w-5 h-5"
+                                                            >
+                                                                <path d="M20 6L9 17l-5-5"></path>
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            ) : column === "conversionMultiplier" ? (
+                                                <div className="flex justify-between">
+                                                    {Number(row[column]).toExponential()}
+                                                    <button 
+                                                        onClick={(event) => handleClick(index, row[column], event)}
+                                                        className="ml-1 hover:bg-black/20 p-1 rounded-md"
+                                                        title="Copy"
+                                                    >
+                                                        {iconStates[index] ? (
+                                                            <svg
+                                                                fill="none"
+                                                                height="24"
+                                                                shapeRendering="geometricPrecision"
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="1.5"
+                                                                viewBox="0 0 24 24"
+                                                                width="24"
+                                                                aria-hidden="true"
+                                                                className="w-5 h-5"
+                                                            >
+                                                                <path d="M6 17C4.89543 17 4 16.1046 4 15V5C4 3.89543 4.89543 3 6 3H13C13.7403 3 14.3866 3.4022 14.7324 4M11 21H18C19.1046 21 20 20.1046 20 19V9C20 7.89543 19.1046 7 18 7H11C9.89543 7 9 7.89543 9 9V19C9 20.1046 9.89543 21 11 21Z"></path>
+                                                            </svg>
+                                                        ) : (
+                                                            <svg
+                                                                fill="none"
+                                                                height="24"
+                                                                shapeRendering="geometricPrecision"
+                                                                stroke="currentColor"
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                strokeWidth="1.5"
+                                                                viewBox="0 0 24 24"
+                                                                width="24"
+                                                                aria-hidden="true"
+                                                                className="w-5 h-5"
+                                                            >
+                                                                <path d="M20 6L9 17l-5-5"></path>
+                                                            </svg>
+                                                        )}
+                                                    </button>
+                                                </div>
+                                            ) : Array.isArray(row[column])
+                                                ? row[column].join(', ')
+                                                : row[column]}
                                         </td>
                                     ))}
                                 </tr>

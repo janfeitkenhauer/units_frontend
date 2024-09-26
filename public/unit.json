@@ -24,29 +24,7 @@
     "https://vocab.sentier.dev/qudt/unit/KiloGM": {
         "type": "Concept",
         "prefLabel": [
-            "كيلوغرام",
-            "килограм",
-            "kilogram",
-            "Kilogramm",
-            "χιλιόγραμμο",
-            "kilogram",
-            "kilogramo",
-            "کیلوگرم",
-            "kilogramme",
-            "קילוגרם",
-            "किलोग्राम",
-            "kilogramm*",
-            "chilogrammo",
-            "キログラム",
-            "chiliogramma",
-            "kilogram",
-            "kilogram",
-            "quilograma",
-            "kilogram",
-            "килограмм",
-            "kilogram",
-            "kilogram",
-            "公斤"
+            "كيلوغرام"
         ],
         "notation": [
             "0112/2///62720#UAA594",
