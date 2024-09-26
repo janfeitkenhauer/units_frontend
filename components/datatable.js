@@ -5,23 +5,24 @@ import React, { useState, useEffect } from 'react';
 
 const DataTable = () => {
     const [tableData, setTableData] = useState([]);
-    const [iconStates, setIconStates] = useState({});
+    const [iconStates, setIconStates] = useState({}); // State to track the icon display state for each button
 
     const columns = ['IRI', 'prefLabel', 'notation', 'conversionMultiplier'];
 
-    const handleClick = (index, text, event) => {
+    const handleClick = (rowIndex, buttonType, text, event) => {
         event.stopPropagation();
-        
+
+        // Copy the text to the clipboard
         navigator.clipboard.writeText(text).then(() => {
             setIconStates((prev) => ({
                 ...prev,
-                [index]: false
+                [`${rowIndex}_${buttonType}`]: false // Change the state for this specific button
             }));
 
             setTimeout(() => {
                 setIconStates((prev) => ({
                     ...prev,
-                    [index]: true
+                    [`${rowIndex}_${buttonType}`]: true // Reset the state for this specific button
                 }));
             }, 800);
         }).catch((err) => {
@@ -30,10 +31,12 @@ const DataTable = () => {
     };
 
     useEffect(() => {
-        const initialIconStates = tableData.reduce((acc, _, index) => {
-            acc[index] = true;
-            return acc;
-        }, {});
+        // Initialize iconStates for all data rows to true (show the first icon)
+        const initialIconStates = {};
+        tableData.forEach((_, index) => {
+            initialIconStates[`${index}_iri`] = true; // State for IRI button
+            initialIconStates[`${index}_conversion`] = true; // State for conversionMultiplier button
+        });
         setIconStates(initialIconStates);
     }, [tableData]);
 
@@ -80,11 +83,11 @@ const DataTable = () => {
                                                 <div className="flex justify-between items-center">
                                                     {row[column]}
                                                     <button 
-                                                        onClick={(event) => handleClick(index, row[column], event)}
+                                                        onClick={(event) => handleClick(index, 'iri', row[column], event)}
                                                         className="ml-1 hover:bg-black/20 p-1 rounded-md"
                                                         title="Copy"
                                                     >
-                                                        {iconStates[index] ? (
+                                                        {iconStates[`${index}_iri`] ? (
                                                             <svg
                                                                 fill="none"
                                                                 height="24"
@@ -120,14 +123,14 @@ const DataTable = () => {
                                                     </button>
                                                 </div>
                                             ) : column === "conversionMultiplier" ? (
-                                                <div className="flex justify-between">
+                                                <div className="flex justify-between items-center">
                                                     {Number(row[column]).toExponential()}
                                                     <button 
-                                                        onClick={(event) => handleClick(index, row[column], event)}
+                                                        onClick={(event) => handleClick(index, 'conversion', row[column], event)}
                                                         className="ml-1 hover:bg-black/20 p-1 rounded-md"
                                                         title="Copy"
                                                     >
-                                                        {iconStates[index] ? (
+                                                        {iconStates[`${index}_conversion`] ? (
                                                             <svg
                                                                 fill="none"
                                                                 height="24"
