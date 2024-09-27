@@ -2,6 +2,7 @@ import DataTable from "@/components/datatable";
 import Link from "next/link";
 
 export default function Velocity() {
+    const api = ["https://api.units.sentier.dev/v0_1/unit?iri=https://vocab.sentier.dev/qudt/unit/M-PER-SEC&lang=en"];
     return (
       <div className="m-4">
         <div className="flex justify-start">
@@ -26,7 +27,7 @@ export default function Velocity() {
                 </Link>
             </div>
         <h1 className="text-2xl font-bold my-4">Velocity</h1>
-        <DataTable />
+        <DataTable api={api} />
       </div>
     );
   }

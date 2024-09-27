@@ -2,6 +2,7 @@ import DataTable from "@/components/datatable";
 import Link from "next/link";
 
 export default function Volume() {
+    const api = ["https://api.units.sentier.dev/v0_1/unit?iri=https://vocab.sentier.dev/qudt/unit/MOL&lang=en"];
     return (
       <div className="m-4">
         <div className="flex justify-start">
@@ -26,7 +27,7 @@ export default function Volume() {
                 </Link>
             </div>
         <h1 className="text-2xl font-bold my-4">Volume</h1>
-        <DataTable />
+        <DataTable api={api} />
       </div>
     );
   }

@@ -3,11 +3,11 @@
 import DataConverter from "./dataconverter";
 import React, { useState, useEffect } from 'react';
 
-const DataTable = () => {
+const DataTable = ({api}) => {
     const [tableData, setTableData] = useState([]);
     const [iconStates, setIconStates] = useState({}); // State to track the icon display state for each button
 
-    const columns = ['URI', 'prefLabel', 'notation', 'conversionMultiplier'];
+    const columns = ['IRI', 'prefLabel', 'notation', 'conversionMultiplier'];
 
     const handleClick = (rowIndex, buttonType, text, event) => {
         event.stopPropagation();
@@ -34,7 +34,7 @@ const DataTable = () => {
         // Initialize iconStates for all data rows to true (show the first icon)
         const initialIconStates = {};
         tableData.forEach((_, index) => {
-            initialIconStates[`${index}_uri`] = true; // State for URI button
+            initialIconStates[`${index}_iri`] = true; // State for IRI button
             initialIconStates[`${index}_conversion`] = true; // State for conversionMultiplier button
         });
         setIconStates(initialIconStates);
@@ -51,7 +51,7 @@ const DataTable = () => {
 
     return (
         <div>
-            <DataConverter setTableData={setTableData} columns={columns}/>
+            <DataConverter setTableData={setTableData} columns={columns} api={api}/>
             <div className="w-full overflow-x-auto border border-gray-200 rounded">
                 <table className="min-w-full bg-white shadow-md rounded border-collapse">
                     <thead>
@@ -79,15 +79,15 @@ const DataTable = () => {
                                             key={column}
                                             className="px-4 py-2 border-b text-sm text-gray-700"
                                         >
-                                            {column === "URI" ? (
+                                            {column === "IRI" ? (
                                                 <div className="flex justify-between items-center">
                                                     {row[column]}
                                                     <button 
-                                                        onClick={(event) => handleClick(index, 'uri', row[column], event)}
+                                                        onClick={(event) => handleClick(index, 'iri', row[column], event)}
                                                         className="ml-1 hover:bg-black/20 p-1 rounded-md"
                                                         title="Copy"
                                                     >
-                                                        {iconStates[`${index}_uri`] ? (
+                                                        {iconStates[`${index}_iri`] ? (
                                                             <svg
                                                                 fill="none"
                                                                 height="24"

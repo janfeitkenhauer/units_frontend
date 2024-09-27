@@ -2,13 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-const DataConverter = ({ setTableData, columns }) => {
+const DataConverter = ({ setTableData, columns, api }) => {
     const [error, setError] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/unit.json');
+                const response = await fetch(api);
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -20,10 +20,10 @@ const DataConverter = ({ setTableData, columns }) => {
                     const entry = data[key];
                     const row = {};
                   
-                    // Populate the URI column with the current key
-                    row['URI'] = key;
+                    // Populate the IRI column with the current key
+                    row['IRI'] = key;
 
-                    columns.slice(1).forEach(column => { // Start from index 1 to skip URI
+                    columns.slice(1).forEach(column => { // Start from index 1 to skip IRI
                         // Set the value, if it exists, otherwise set it to null or an appropriate default value
                         row[column] = entry[column] !== undefined ? entry[column] : null;
                     });
